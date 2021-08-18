@@ -59,4 +59,4 @@ buck-out/
 /ios/Pods/
 
 # Custom
-src/firebase/firebaseConfig.ts
+android/app/google-services.json
