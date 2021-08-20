@@ -3,7 +3,7 @@ import { DefaultTheme } from 'react-native-paper';
 
 export const paperTheme: ReactNativePaper.Theme = {
   ...DefaultTheme,
-  roundness: 2,
+  roundness: 10,
   colors: {
     ...DefaultTheme.colors,
     primary: '#2196f3',

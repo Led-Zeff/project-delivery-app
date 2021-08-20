@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { Checkbox, List, Text } from 'react-native-paper';
-import { ShoppingDocument } from '../model/Shopping';
-import { FormatUtils } from '../utils/FormatUtils';
+import { ShoppingDocument } from '../../model/Shopping';
+import { FormatUtils } from '../../utils/FormatUtils';
 
 interface Props {
   shoppingItem: ShoppingDocument;

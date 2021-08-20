@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from 'react';
 import { FlatList } from 'react-native';
 import { ActivityIndicator, List } from 'react-native-paper';
-import { ShoppingDocument } from '../model/Shopping';
-import { useStore } from '../stores/store';
-import { appStyles } from '../theme/paperTheme';
+import { ShoppingDocument } from '../../model/Shopping';
+import { useStore } from '../../stores/store';
+import { appStyles } from '../../theme/paperTheme';
 import { ShoppingListItem } from './ShoppingListItem';
 
 export const ShoppingList = () => {
