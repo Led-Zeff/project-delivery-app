@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from 'react';
 import { FlatList } from 'react-native';
-import { ActivityIndicator, List, useTheme } from 'react-native-paper';
+import { ActivityIndicator, List } from 'react-native-paper';
 import { ShoppingDocument } from '../model/Shopping';
 import { useStore } from '../stores/store';
+import { appStyles } from '../theme/paperTheme';
 import { ShoppingListItem } from './ShoppingListItem';
 
 export const ShoppingList = () => {
-  const { colors } = useTheme();
   const {
     shoppingStore: { loadShoppingList },
   } = useStore();
@@ -23,7 +23,7 @@ export const ShoppingList = () => {
   }, [loadShoppingList]);
 
   if (isLoading) {
-    return <ActivityIndicator color={colors.accent} />;
+    return <ActivityIndicator size={50} style={appStyles.loading} />;
   }
 
   return (

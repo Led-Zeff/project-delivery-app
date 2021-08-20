@@ -1,3 +1,4 @@
+import { StyleSheet } from 'react-native';
 import { DefaultTheme } from 'react-native-paper';
 
 export const paperTheme: ReactNativePaper.Theme = {
@@ -9,3 +10,9 @@ export const paperTheme: ReactNativePaper.Theme = {
     accent: '#0069c0',
   },
 };
+
+export const appStyles = StyleSheet.create({
+  loading: {
+    flex: 1,
+  },
+});
