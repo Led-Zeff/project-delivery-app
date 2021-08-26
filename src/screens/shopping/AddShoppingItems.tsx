@@ -1,45 +1,44 @@
 import React, { useState } from 'react';
-import { StackScreenProps } from '@react-navigation/stack';
-import { StyleSheet } from 'react-native';
-import { Appbar, TextInput, useTheme } from 'react-native-paper';
+import { SearchInput } from '../../components/shared/SearchInput';
+import { FlatList, StyleSheet, View } from 'react-native';
+import { useStore } from '../../stores/store';
+import { ProductDocument } from '../../model/Product';
+import { List } from 'react-native-paper';
 
-interface Props extends StackScreenProps<any, any> {}
+export const AddShoppingItems = () => {
+  const { productsStore } = useStore();
+  const [products, setProducts] = useState<ProductDocument[]>([]);
 
-export const AddShoppingItems = ({ navigation }: Props) => {
-  const { colors } = useTheme();
-  const [focus, setFocus] = useState(false);
+  const searchProducts = (filter: string) => {
+    if (filter.trim() !== '') {
+      productsStore.searchProducts(filter).then(setProducts);
+    } else {
+      setProducts([]);
+    }
+  };
 
   return (
-    <>
-      <Appbar.Header>
-        {navigation.canGoBack() ? (
-          <Appbar.BackAction onPress={navigation.goBack} />
-        ) : null}
-        <Appbar.Content title="Agregar producto" />
-      </Appbar.Header>
-
-      <TextInput
+    <View style={styles.container}>
+      <SearchInput
         placeholder="Buscar producto"
-        mode="outlined"
-        dense
         style={styles.input}
-        autoFocus
-        onFocus={() => setFocus(true)}
-        onBlur={() => setFocus(false)}
-        right={
-          <TextInput.Icon
-            name="magnify"
-            color={focus ? colors.primary : undefined}
-          />
-        }
+        onChange={searchProducts}
       />
-    </>
+
+      <FlatList
+        data={products}
+        renderItem={({ item }) => <List.Item title={item.name} />}
+      />
+    </View>
   );
 };
 
 const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    flexDirection: 'column',
+  },
   input: {
-    marginHorizontal: 8,
-    marginVertical: 4,
+    margin: 8,
   },
 });
