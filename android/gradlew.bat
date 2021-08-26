@@ -51,15 +51,15 @@ echo location of your Java installation.
 goto fail
 
 :findJavaFromJavaHome
-set JAVA_HOME=%JAVA_HOME:"=%
-set JAVA_EXE=%JAVA_HOME%/bin/java.exe
+set JAVA_HOME_8=%JAVA_HOME_8:"=%
+set JAVA_EXE=%JAVA_HOME_8%/bin/java.exe
 
 if exist "%JAVA_EXE%" goto execute
 
 echo.
-echo ERROR: JAVA_HOME is set to an invalid directory: %JAVA_HOME%
+echo ERROR: JAVA_HOME_8 is set to an invalid directory: %JAVA_HOME_8%
 echo.
-echo Please set the JAVA_HOME variable in your environment to match the
+echo Please set the JAVA_HOME_8 variable in your environment to match the
 echo location of your Java installation.
 
 goto fail

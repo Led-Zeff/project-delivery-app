@@ -59,4 +59,3 @@ buck-out/
 /ios/Pods/
 
 # Custom
-android/app/google-services.json
