@@ -18,10 +18,9 @@ export const ShoppingList = () => {
   }, [shoppingStore]);
 
   useEffect(() => {
-    const socket = new SockJS('http://localhost:8080/delivery-ws');
-    socket.onopen = console.log;
-    socket.onmessage = console.log;
-    const client = Stomp.over(socket);
+    const client = Stomp.over(
+      () => new SockJS('http://localhost:8080/delivery-ws'),
+    );
     client.connect({}, () => {
       client.subscribe('/shopping', msg => console.log(msg.body));
     });
