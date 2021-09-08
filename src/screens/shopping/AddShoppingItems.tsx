@@ -3,12 +3,27 @@ import { SearchInput } from '../../components/shared/SearchInput';
 import { FlatList, StyleSheet, View } from 'react-native';
 import { ProductDocument } from '../../model/Product';
 import { List } from 'react-native-paper';
+import { observer } from 'mobx-react-lite';
+import { useStore } from '../../stores/store';
+import Loading from '../../components/shared/Loading';
 
-export const AddShoppingItems = () => {
+export const AddShoppingItems = observer(() => {
   const [products, setProducts] = useState<ProductDocument[]>([]);
+  const [loading, setLoading] = useState(false);
 
-  const searchProducts = () => {
-    setProducts([]);
+  const {
+    productsStore: { searchProducts },
+  } = useStore();
+
+  const search = (text: string) => {
+    if (text) {
+      setLoading(true);
+      searchProducts(text)
+        .then(setProducts)
+        .finally(() => setLoading(false));
+    } else {
+      setProducts([]);
+    }
   };
 
   return (
@@ -16,16 +31,20 @@ export const AddShoppingItems = () => {
       <SearchInput
         placeholder="Buscar producto"
         style={styles.input}
-        onChange={searchProducts}
+        onChange={search}
       />
 
-      <FlatList
-        data={products}
-        renderItem={({ item }) => <List.Item title={item.name} />}
-      />
+      {loading ? (
+        <Loading />
+      ) : (
+        <FlatList
+          data={products}
+          renderItem={({ item }) => <List.Item title={item.name} />}
+        />
+      )}
     </View>
   );
-};
+});
 
 const styles = StyleSheet.create({
   container: {

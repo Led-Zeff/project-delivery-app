@@ -1,30 +1,27 @@
+import { observer } from 'mobx-react-lite';
 import React, { useEffect, useState } from 'react';
-import { Stomp } from '@stomp/stompjs';
 import { FlatList } from 'react-native';
 import { ActivityIndicator, List } from 'react-native-paper';
-import SockJS from 'sockjs-client';
 import { useStore } from '../../stores/store';
 import { appStyles } from '../../theme/paperTheme';
 import { ShoppingListItem } from './ShoppingListItem';
 
-export const ShoppingList = () => {
-  const { shoppingStore } = useStore();
-  const { shoppingList } = shoppingStore;
+export const ShoppingList = observer(() => {
+  const {
+    shoppingStore: { loadPage, shoppingList, wsSubscribe, wsUnsubscribe },
+  } = useStore();
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     console.log('Loading shopping list');
-    shoppingStore.loadPage().finally(() => setIsLoading(false));
-  }, [shoppingStore]);
+    loadPage().finally(() => setIsLoading(false));
+  }, [loadPage]);
 
   useEffect(() => {
-    const client = Stomp.over(
-      () => new SockJS('http://localhost:8080/delivery-ws'),
-    );
-    client.connect({}, () => {
-      client.subscribe('/shopping', msg => console.log(msg.body));
-    });
-  }, []);
+    wsSubscribe();
+
+    return wsUnsubscribe;
+  }, [wsSubscribe, wsUnsubscribe]);
 
   if (isLoading) {
     return <ActivityIndicator size={50} style={appStyles.loading} />;
@@ -39,4 +36,4 @@ export const ShoppingList = () => {
       />
     </List.Section>
   );
-};
+});

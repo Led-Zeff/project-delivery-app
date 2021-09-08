@@ -1,5 +1,6 @@
 import axios, { AxiosRequestConfig, AxiosResponse } from 'axios';
 import { ShoppingDocument } from '../model/Shopping';
+import { ProductDocument } from '../model/Product';
 import { ApiConf } from './ApiConf';
 
 axios.defaults.baseURL = ApiConf.url;
@@ -21,6 +22,11 @@ const Shopping = {
   page: () => requests.get<ShoppingDocument[]>('/shopping'),
 };
 
-const API = { Shopping };
+const Products = {
+  search: (query: string) =>
+    requests.get<ProductDocument[]>(`/products/search/${query}`),
+};
+
+const API = { Shopping, Products };
 
 export default API;

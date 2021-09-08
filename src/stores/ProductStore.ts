@@ -1,11 +1,12 @@
 import { makeAutoObservable } from 'mobx';
+import API from '../api/ShoppingApi';
 
 export default class ProductStore {
   constructor() {
     makeAutoObservable(this);
   }
 
-  searchProducts = async () => {
-    return null;
+  searchProducts = (query: string) => {
+    return API.Products.search(query);
   };
 }
