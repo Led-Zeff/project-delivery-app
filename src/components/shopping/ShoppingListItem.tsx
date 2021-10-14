@@ -1,3 +1,4 @@
+import { observer } from 'mobx-react-lite';
 import React, { useState } from 'react';
 import { Checkbox, List, Text } from 'react-native-paper';
 import { ShoppingDocument } from '../../model/Shopping';
@@ -7,13 +8,13 @@ interface Props {
   shoppingItem: ShoppingDocument;
 }
 
-export const ShoppingListItem = ({ shoppingItem: item }: Props) => {
+export const ShoppingListItem = observer(({ shoppingItem: item }: Props) => {
   const [checked, setChecked] = useState(false);
 
   return (
     <List.Item
       key={item.id}
-      title={item.name}
+      title={item.product.name}
       right={() => (
         <>
           <Text style={{ alignSelf: 'center', marginRight: 4 }}>
@@ -27,4 +28,4 @@ export const ShoppingListItem = ({ shoppingItem: item }: Props) => {
       )}
     />
   );
-};
+});

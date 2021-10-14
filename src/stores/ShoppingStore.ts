@@ -10,16 +10,31 @@ export default class ShoppingStore {
     makeAutoObservable(this);
   }
 
-  loadPage = async () => {
-    const page = await API.Shopping.page();
-    page.forEach(this.addToRegistry);
+  loadShoppingList = async () => {
+    const list = await API.Shopping.getAll();
+    list.forEach(this.addToRegistry);
   };
 
   wsSubscribe = () => {
     ShoppingSocket.subscribe(ev => {
-      console.log('event', ev);
       this.addToRegistry(ev.payload);
     });
+  };
+
+  isAdded = (productId: string) => {
+    return this.shoppingList.some(item => {
+      return item.product.productId === productId;
+    });
+  };
+
+  addItem = async (newShopping: ShoppingDocument) => {
+    if (this.isAdded(newShopping.product.productId)) {
+      return;
+    }
+
+    const response = await API.Shopping.add(newShopping);
+    this.addToRegistry(response);
+    return response;
   };
 
   wsUnsubscribe = () => {
@@ -27,10 +42,15 @@ export default class ShoppingStore {
   };
 
   private addToRegistry = (shopping: ShoppingDocument) => {
-    this.shoppingRegistry.set(shopping.id!, shopping);
+    this.shoppingRegistry.set(shopping.id!, {
+      ...shopping,
+      createTime: new Date(shopping.createTime!),
+    });
   };
 
   get shoppingList(): ShoppingDocument[] {
-    return Array.from(this.shoppingRegistry.values());
+    return Array.from(this.shoppingRegistry.values()).sort(
+      (a, b) => a.createTime!.getTime() - b.createTime!.getTime(),
+    );
   }
 }

@@ -15,4 +15,9 @@ export const appStyles = StyleSheet.create({
   loading: {
     flex: 1,
   },
+  text: {
+    fontSize: 14,
+  },
 });
+
+export const appSpacing = { sm: 8, md: 16 };

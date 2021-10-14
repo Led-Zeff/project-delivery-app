@@ -2,6 +2,7 @@ import SockJS from 'sockjs-client';
 import { ApiConf } from './ApiConf';
 import { Stomp } from '@stomp/stompjs';
 import { ShoppingDocument } from '../model/Shopping';
+import { ProductDocument } from '../model/Product';
 
 //* Socket factory to be used by StompJS */
 const socketFactory = () => new SockJS(ApiConf.webSocketUrl);
@@ -38,9 +39,16 @@ const subscribe = async <T>(
 };
 
 type ShoppingEvent = { type: 'NEW'; payload: ShoppingDocument };
+type ProductEvent = { type: 'NEW'; payload: ProductDocument };
 
 export const ShoppingSocket = {
   subscribe: (callback: (event: ShoppingEvent) => void) =>
     subscribe('/shopping', callback),
   unsubscribe: () => stompClient.unsubscribe('/shopping'),
+};
+
+export const ProductSocket = {
+  subscribe: (callback: (event: ProductEvent) => void) =>
+    subscribe('/products', callback),
+  unsubscribe: () => stompClient.unsubscribe('/products'),
 };

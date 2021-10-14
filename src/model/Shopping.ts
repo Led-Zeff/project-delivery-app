@@ -1,6 +1,10 @@
 export interface ShoppingDocument {
   id?: string;
-  name: string;
+  product: {
+    productId: string;
+    name: string;
+  };
   quantity: number;
-  price: number;
+  price?: number;
+  createTime?: Date;
 }

@@ -8,14 +8,19 @@ import { ShoppingListItem } from './ShoppingListItem';
 
 export const ShoppingList = observer(() => {
   const {
-    shoppingStore: { loadPage, shoppingList, wsSubscribe, wsUnsubscribe },
+    shoppingStore: {
+      loadShoppingList,
+      shoppingList,
+      wsSubscribe,
+      wsUnsubscribe,
+    },
   } = useStore();
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     console.log('Loading shopping list');
-    loadPage().finally(() => setIsLoading(false));
-  }, [loadPage]);
+    loadShoppingList().finally(() => setIsLoading(false));
+  }, [loadShoppingList]);
 
   useEffect(() => {
     wsSubscribe();

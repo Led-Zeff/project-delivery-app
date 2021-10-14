@@ -1,5 +1,5 @@
 export const FormatUtils = {
-  currency: (num: number) =>
+  currency: (num: number | undefined) =>
     typeof num === 'number' ? `$${FormatUtils.number(num, 2)}` : '',
   number: (num: number, decimals = 0) => {
     if (typeof num !== 'number') {

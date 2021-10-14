@@ -19,12 +19,15 @@ const requests = {
 };
 
 const Shopping = {
-  page: () => requests.get<ShoppingDocument[]>('/shopping'),
+  getAll: () => requests.get<ShoppingDocument[]>('/shopping'),
+  add: (shopping: ShoppingDocument) =>
+    requests.post<ShoppingDocument>('/shopping', shopping),
 };
 
 const Products = {
   search: (query: string) =>
     requests.get<ProductDocument[]>(`/products/search/${query}`),
+  getRecents: () => requests.get<ProductDocument[]>('/products/recent'),
 };
 
 const API = { Shopping, Products };

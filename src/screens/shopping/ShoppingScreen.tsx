@@ -12,7 +12,9 @@ export const ShoppingScreen = ({ navigation }: Props) => {
       <Appbar.Header>
         <Appbar.Content title="Compras" />
       </Appbar.Header>
+
       <ShoppingList />
+
       <AddShoppingFab onPress={() => navigation.navigate('AddShoppingItems')} />
     </>
   );
